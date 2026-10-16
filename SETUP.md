@@ -11,7 +11,7 @@
 
 ## What is prepared
 
-A static homepage, all three brand sections, expandable introductory notes, an about section, local artwork, a favicon, a 404 page, mobile layouts, keyboard focus styles and reduced-motion support. Content identifies future products and travel writing as work in progress.
+A static homepage, all three brand sections, expandable introductory notes, an about section, the supplied original brand artwork, a favicon, a 404 page, mobile layouts, keyboard focus styles and reduced-motion support. Content identifies future products and travel writing as work in progress.
 
 Hosting configuration maps only target `www` to site `workwanderwisdom-e7f48` in project `workwanderwisdom-e7f48`. The deployment action explicitly selects both the project and this target. It cannot select Split Timer or PastPortal through these settings. No global Firebase project switch is required.
 
@@ -42,7 +42,7 @@ This explicit command deploys only the WWW Hosting target. Do not replace it wit
 
 ## Cost controls
 
-This site needs classic Firebase Hosting only, not a Firebase app registration or paid backend. The public files have a validation limit of 250 KB. No billable backend, analytics, API, signup form or external resource has been added. Automatic preview deployments are omitted to avoid accumulating preview versions.
+This site needs classic Firebase Hosting only, not a Firebase app registration or paid backend. The public files have a validation limit of 2.6 MB, including the original PNG artwork. No billable backend, analytics, API, signup form or external resource has been added. Automatic preview deployments are omitted to avoid accumulating preview versions.
 
 Firebase currently documents 10 GB no-cost Hosting storage and 10 GB/month no-cost transfer. Quotas apply across the Firebase project. On Spark, reaching a quota can block deployments or temporarily disable sites; Blaze can incur charges above the allowance. The actual WWW plan and usage must be checked before representing hosting as S$0. Do not enable billing, upgrade the plan, or delete previous releases without approval.
 
@@ -58,3 +58,9 @@ The canonical URL is intentionally not set to the custom domain while its connec
 - [Firebase Hosting quotas and pricing](https://firebase.google.com/docs/hosting/usage-quotas-pricing)
 - [Firebase Hosting configuration](https://firebase.google.com/docs/hosting/full-config)
 - [Firebase deployment action](https://github.com/FirebaseExtended/action-hosting-deploy)
+
+## Official brand preview update
+
+The official name is WorkWanderWisdom, with capital W letters and no spaces. The prominent stacked wordmark and terracotta compass use the supplied original PNG files unchanged, in their original square proportions. The compact header uses the official name in one line; Work, Wander and Wisdom remain separate navigation labels. The Carousel reference informs the editorial direction and “Begin your journey” headline. No artwork was redrawn or recoloured. The former sage illustrations were removed.
+
+This revision is prepared for homepage preview and approval before deployment. Keep it off main until the user approves publication. Firebase, GitHub deployment activation and DNS configuration are unchanged.

@@ -1,14 +1,14 @@
-# Work Wander Wisdom
+# WorkWanderWisdom
 
 A small digital studio and journal, organised around **Work**, **Wander**, and **Wisdom**.
 
-This first website uses plain HTML, CSS and local SVG artwork. No build step, paid service, database, Firebase web SDK, external fonts or browser JavaScript is required.
+This first website uses plain HTML, CSS and the supplied original PNG brand artwork. No build step, paid service, database, Firebase web SDK, external fonts or browser JavaScript is required.
 
 ## Where things live
 
 - `public/index.html`: homepage and all three sections.
-- `public/styles.css`: cream, sage and rust design; mobile layouts.
-- `public/assets/`: original SVG illustrations and favicon.
+- `public/styles.css`: ivory, charcoal and terracotta design; mobile layouts.
+- `public/assets/`: the original stacked logo and compass, preserved without cropping or redrawing.
 - `public/404.html`: page-not-found screen.
 - `firebase.json`: Hosting settings; uploads only `public/`.
 - `.firebaserc`: fixes the `www` target to site `workwanderwisdom-e7f48` in the existing project of the same name.
