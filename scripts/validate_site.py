@@ -59,6 +59,7 @@ require(aliases["targets"] == {PROJECT: {"hosting": {"www": [PROJECT]}}}, "Only 
 pages = {path: Page(path.read_text()) for path in PUBLIC.rglob("*.html")}
 require(PUBLIC / "index.html" in pages and PUBLIC / "404.html" in pages, "Homepage and 404 page are required.")
 for path, page in pages.items():
+    require("Work Wander Wisdom" not in path.read_text(), f"Use the official name WorkWanderWisdom in {path.name}.")
     require(page.lang and page.viewport and page.title, f"Missing page metadata: {path.name}")
     require(page.h1_count == 1, f"Expected one main heading in {path.name}")
     require(all(n == 1 for n in Counter(page.ids).values()), f"Duplicate IDs in {path.name}")
@@ -80,6 +81,6 @@ for path in PUBLIC.rglob("*.svg"):
 files = [p for p in PUBLIC.rglob("*") if p.is_file()]
 require(not any(p.is_symlink() for p in PUBLIC.rglob("*")), "Public files must not be symbolic links.")
 total = sum(p.stat().st_size for p in files)
-require(total < 250_000, f"Keep the initial website under 250 KB; found {total} bytes.")
+require(total < 2_600_000, f"Keep website and original brand artwork under 2.6 MB; found {total} bytes.")
 print(f"PASS: {len(pages)} pages, all local links and SVGs valid, {len(files)} public files, {total:,} bytes.")
 print("PASS: deploys only Hosting target www in project workwanderwisdom-e7f48.")
