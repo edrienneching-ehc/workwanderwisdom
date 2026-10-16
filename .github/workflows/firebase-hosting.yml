@@ -1,0 +1,71 @@
+name: Check and deploy WWW
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Check website and hosting scope
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Get website files
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Validate files and WWW-only deployment configuration
+        run: python3 scripts/validate_site.py
+
+  deploy:
+    name: Deploy to WWW Firebase Hosting
+    needs: validate
+    # Activation is intentional: verify Firebase access, site ownership, billing
+    # plan and the repository secret before setting this repository variable.
+    if: >-
+      github.repository == 'edrienneching-ehc/workwanderwisdom' &&
+      github.ref == 'refs/heads/main' &&
+      github.event_name != 'pull_request' &&
+      vars.WWW_FIREBASE_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: www-firebase-production
+      cancel-in-progress: false
+    steps:
+      - name: Get the validated website files
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check deployment credential is configured for WWW
+        env:
+          WWW_FIREBASE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKWANDERWISDOM_E7F48 }}
+        shell: python
+        run: |
+          import json, os, sys
+          raw = os.environ.get('WWW_FIREBASE_ACCOUNT', '')
+          if not raw:
+              sys.exit('Missing WWW Firebase service-account secret. No deployment attempted.')
+          try:
+              account = json.loads(raw)
+          except (ValueError, TypeError):
+              sys.exit('The WWW Firebase secret must contain valid service-account JSON.')
+          if (account.get('project_id') != 'workwanderwisdom-e7f48'
+              or account.get('type') != 'service_account'
+              or not account.get('client_email')
+              or not account.get('private_key')):
+              sys.exit('The deployment credential is not a WWW service-account key. No deployment attempted.')
+      - name: Deploy only the www hosting target
+        uses: FirebaseExtended/action-hosting-deploy@500ac625ca2dd40cbd15f7659af953801858032a # v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_WORKWANDERWISDOM_E7F48 }}
+          projectId: workwanderwisdom-e7f48
+          channelId: live
+          target: www
+          disableComment: true

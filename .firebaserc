@@ -1,0 +1,8 @@
+{
+  "projects": {"default": "workwanderwisdom-e7f48"},
+  "targets": {
+    "workwanderwisdom-e7f48": {
+      "hosting": {"www": ["workwanderwisdom-e7f48"]}
+    }
+  }
+}
